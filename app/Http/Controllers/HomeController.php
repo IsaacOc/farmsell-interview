@@ -29,7 +29,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        
+        $time_in = null;
+        $time_out = null;
         //return log
         $Logs = Logs::all();
         // iterate through collection       
@@ -45,7 +46,13 @@ class HomeController extends Controller
             ->with('success' , 'Time In recorded thanx');
 
         }
-        elseif(!$time_in == null && !$time_out == null){
+        elseif($time_in == null && $time_out == null){
+            //fires link event capturing page url       
+            event(new Links());
+            //returns view home index for time_In recording data
+            return view('home');
+        }
+        elseif($time_in  && $time_out ){
             //fires link event capturing page url       
             event(new Links());
             //returns view home index for time_In recording data
